@@ -1,7 +1,7 @@
 ﻿
 // Related_to_Registry_and_EnvirmentValueDlg.h: 헤더 파일
 //
-
+#include <fstream>
 #pragma once
 
 
@@ -56,4 +56,11 @@ public:
 	afx_msg void OnBnClickedButtonReadEnvirvalue2();
 	CString m_strRefreshData;
 	afx_msg void OnBnClickedButtonReadEnvirvalue3();
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedButton3();
+	CString m_strEclipseID;
+	CString m_strEclipsePW;
+	afx_msg void OnBnClickedButton4();
+	afx_msg void OnBnClickedButton5();
 };

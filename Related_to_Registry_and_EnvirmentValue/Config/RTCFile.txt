@@ -1,0 +1,15 @@
+Usage : User should use only one workspace, Product Name and source stream entry (Don't add more than one worksapce or source stream name)
+Usage : Enter loadrules file name with full share path
+Usage : Product, Stream and loadrule should match as single product 
+
+::Below type Exact WorkSpace name and one WorkSpace at a time
+YANG_CSS_1.1_Workspace2
+
+::Product Name (XE_FLR or H_FLR or M_FLR)
+H_FLR
+
+::Product's integration Stream Name.
+PurionH_V4.1_Korea
+
+::loadrules
+\\prodsoftware.axcelis.com\SoftwareDev\RTC\Load_Rules\SubSystems\CSS\Non_Common_H_FLR.loadrule

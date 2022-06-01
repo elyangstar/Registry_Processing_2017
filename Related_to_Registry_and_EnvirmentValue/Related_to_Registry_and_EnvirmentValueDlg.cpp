@@ -62,10 +62,13 @@ CRelatedtoRegistryandEnvirmentValueDlg::CRelatedtoRegistryandEnvirmentValueDlg(C
 	m_strRegistryName2	= "";
 	m_strRegiModifyPath = "";
 
-	m_strEnvirName		= "ComSpec2";
+	m_strEnvirName		= "VIEW_PATH";
 	m_strEnvirValue		= "";
 	m_strModifyEnvirValue = "";
 	m_strRefreshData	= "";
+
+	m_strEclipseID		= "t4300691";
+	m_strEclipsePW		= "diddmsdyd123";
 }
 
 void CRelatedtoRegistryandEnvirmentValueDlg::DoDataExchange(CDataExchange* pDX)
@@ -81,6 +84,8 @@ void CRelatedtoRegistryandEnvirmentValueDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_ENVIRONMENT_VALUE, m_strEnvirValue);
 	DDX_Text(pDX, IDC_ENVIRONMENT_VALUE_MOD, m_strModifyEnvirValue);
 	DDX_Text(pDX, IDC_ENVIRONMENT_REFRESH_DATA, m_strRefreshData);
+	DDX_Text(pDX, IDC_ECLIPSE_ID, m_strEclipseID);
+	DDX_Text(pDX, IDC_ECLIPSE_PW, m_strEclipsePW);
 }
 
 BEGIN_MESSAGE_MAP(CRelatedtoRegistryandEnvirmentValueDlg, CDialog)
@@ -97,6 +102,11 @@ BEGIN_MESSAGE_MAP(CRelatedtoRegistryandEnvirmentValueDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_READ_ENVIRVALUE, &CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButtonReadEnvirvalue)
 	ON_BN_CLICKED(IDC_BUTTON_READ_ENVIRVALUE2, &CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButtonReadEnvirvalue2)
 	ON_BN_CLICKED(IDC_BUTTON_READ_ENVIRVALUE3, &CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButtonReadEnvirvalue3)
+	ON_BN_CLICKED(IDC_BUTTON1, &CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON3, &CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON4, &CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON5, &CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButton5)
 END_MESSAGE_MAP()
 
 
@@ -357,4 +367,100 @@ void CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButtonReadEnvirvalue3()
 	}
 
 	UpdateData(FALSE);
+}
+
+void CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButton1()
+{
+	ShellExecute(NULL, "open", "..\\BatFile\\1.PathCheck.Bat", NULL, NULL, SW_SHOW);
+}
+
+void CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButton2()
+{
+	FILE* pf = NULL;
+	CString strPath = "./Config/bat.bat";
+
+	pf = fopen(strPath, "w");
+
+	if (pf)
+	{
+		fprintf(pf, "@ECHO ON\n");
+		fprintf(pf, "set | find \"VIEW_PATH\"\n");
+		fprintf(pf, "set | find \"AXCELIS\"\n");
+		fprintf(pf, "PAUSE");	//test 완료후 삭제할것.
+		fclose(pf);
+
+		system("bat.bat"); //bat파일 실행
+		system("del bat.bat"); //bat파일 삭제
+	}
+}
+
+
+void CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButton3()
+{
+	UpdateData(TRUE);
+
+	FILE* pf = NULL;
+	CString strData = "";
+	CString strPath = ".\\Config\\Cdandscm.bat";
+	strData.Format("scm login -r https://ma960app.axcelis.com:9443/ccm/ -n repo -c -u %s -P %s\n", m_strEclipseID,m_strEclipsePW);
+
+	pf = fopen(strPath, "w");
+
+	if (pf)
+	{
+		fprintf(pf, "@ECHO ON\n");
+		fprintf(pf, "cd C:\\Program Files\\IBM\\TeamConcert\\scmtools\\eclipse\n");
+		fprintf(pf, strData);
+		fprintf(pf, "PAUSE");	//test 완료후 삭제할것.
+		fclose(pf);
+
+		ShellExecute(NULL, "open", strPath, NULL, NULL, SW_SHOW);
+
+	}
+}
+
+
+void CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButton4()
+{
+	UpdateData(TRUE);
+	CString strData = "";
+	strData = m_strEnvirValue + "\\Oracle\\RTC_Script\\RTCFile.txt";
+	ShellExecute(NULL, "open", strData, NULL, NULL, SW_SHOW);
+}
+
+
+void CRelatedtoRegistryandEnvirmentValueDlg::OnBnClickedButton5()
+{
+	CString strPath = ".\\config\\RTCFile2.txt";
+	CString strData = "";
+	
+	strData = m_strEnvirValue + "\\Oracle\\RTC_Script\\RTCFile.txt";
+	
+	FILE* pf = fopen(strPath, "w");
+	//아래의 항목들은 옵션 처리해서 설정 하도록 하자.
+	if (pf)
+	{
+		fprintf(pf, "Usage : User should use only one workspace, Product Name and source stream entry (Don't add more than one worksapce or source stream name)\n");
+		fprintf(pf, "Usage : Enter loadrules file name with full share path\n");
+		fprintf(pf, "Usage : Product, Stream and loadrule should match as single product \n");
+		fprintf(pf, "\n");
+
+		fprintf(pf, "::Below type Exact WorkSpace name and one WorkSpace at a time\n");
+		fprintf(pf, "YEY_CSSSSSS\n");
+		fprintf(pf, "\n");
+
+		fprintf(pf, "::Product Name (XE_FLR or H_FLR or M_FLR)\n");
+		fprintf(pf, "H_FLR\n");
+		fprintf(pf, "\n");
+
+		fprintf(pf, "::Product's integration Stream Name.\n");
+		fprintf(pf, "PurionH_V4.1_Korea\n");
+		fprintf(pf, "\n");
+
+		fprintf(pf, "::loadrules\n");
+		fprintf(pf, "\\\\prodsoftware.axcelis.com\\SoftwareDev\\RTC\\Load_Rules\\SubSystems\\CSS\\Non_Common_H_FLR.loadrule");
+
+		fclose(pf);
+	}
+	CopyFile(strPath, strData, FALSE);
 }
